@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax1 - TextFile</title>
+</head>
+<body>
+    <button id="my_btn">
+        Get Text File
+    </button>
+
+    <br><br>
+
+    <div id="text"></div>
+
+
+    <!-- this is Vanilla JS -->
+    <script>
+        // create event listener
+        document.getElementById('my_btn').addEventListener('click', loadText);
+
+        function loadText(){
+            // create the XHR object
+            var xhr = new XMLHttpRequest();
+            
+            // OPEN - type, url/file, async - True/False
+            xhr.open('GET', 'sample.txt', true);
+
+            xhr.onload = function(){
+                if(this.status == 200){  // 200 = 'OK' http status
+                    console.log(this.responseText);
+                    document.getElementById('text').innerHTML = this.responseText;
+                }
+                else if(this.status == 404){
+                    document.getElementById('text').innerHTML = 'not found';
+                }
+            }
+
+
+            xhr.onerror = function(){
+                console.log('Request error')
+            }
+
+            // OPTIONAL - used for progress bars/ progress animations when the pg is loading
+            xhr.onprogress = function(){
+                console.log('xhr is loading')
+            }
+
+            // sends request
+            xhr.send()
+
+        }
+    </script>
+</body>
+</html>
